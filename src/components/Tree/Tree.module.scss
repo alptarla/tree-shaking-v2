@@ -1,7 +1,8 @@
-.tree {
+.treeWrapper {
+  position: relative;
   width: 35%;
 
-  svg {
+  .tree {
     width: 100%;
     height: 100%;
   }
