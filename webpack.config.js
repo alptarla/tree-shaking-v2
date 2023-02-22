@@ -1,5 +1,5 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
 
 module.exports = {
   entry: './index.js',
@@ -12,8 +12,8 @@ module.exports = {
   devServer: {
     port: '3000',
     static: {
-      directory: path.join(__dirname, 'public')
-},
+      directory: path.join(__dirname, 'public'),
+    },
     open: true,
     hot: true,
     liveReload: true,
@@ -24,27 +24,28 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/, 
-        exclude: /node_modules/, 
-        use: 'babel-loader', 
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: 'babel-loader',
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.s[ac]ss$/i,
-        use: [
-          "style-loader",
-          "css-loader",
-          "sass-loader",
-        ],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.svg$/i,
+        issuer: /\.[jt]sx?$/,
+        use: ['@svgr/webpack'],
       },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'public', 'index.html')
-    })
-  ]
-};
+      template: path.join(__dirname, 'public', 'index.html'),
+    }),
+  ],
+}
