@@ -37,7 +37,7 @@ function Tree() {
     if (!isDropping) return
 
     const newPos = applesPositions.map((pos, i) => {
-      if (droppedApples.includes(i)) return { left: pos.left, bottom: 0 }
+      if (droppedApples.includes(i)) return { left: pos.left, top: 100 }
       return pos
     })
 

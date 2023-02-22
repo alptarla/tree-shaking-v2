@@ -19,7 +19,7 @@ export function getApplePositions(count) {
 export function makeStylePositions(pos) {
   const newPos = {}
   Object.keys(pos).forEach((k) => {
-    newPos[k] = `${pos[k]}rem`
+    newPos[k] = `${pos[k]}%`
   })
 
   return newPos
