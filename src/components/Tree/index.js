@@ -1,32 +1,80 @@
-import React from 'react'
+import React, { useState } from 'react'
 import TreeSVG from '../../assets/cartoon-tree.svg'
 import Button from '../Button'
 import classes from './Tree.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+  addAppleToBasket,
+  setApplesInTree,
   setIsApplesDropping,
   setIsTreeShaking,
 } from '../../redux/features/sceneSlice'
 import classNames from 'classnames'
 import Apple from '../Apple'
-import { makeStylePositions } from '../../helpers'
+import { getRandomNumber, makeStylePositions } from '../../helpers'
 
 function Tree() {
+  const [droppedApples, setDroppedApples] = useState([])
+
   const { applesInTree, isTreeShaking } = useSelector((state) => state.scene)
   const dispatch = useDispatch()
+
+  const treeClassName = classNames(classes.treeWrapper, {
+    [classes.isShaking]: isTreeShaking,
+  })
+
+  const dropApples = () => {
+    dispatch(setIsApplesDropping(true))
+
+    // picks random apples
+    const randomDroppedApples = []
+    const randomCount = getRandomNumber({ min: 1, max: 10 })
+    for (let i = 0; i < randomCount; i++) {
+      const randomIndex = getRandomNumber({
+        min: 0,
+        max: applesInTree.length - 1,
+      })
+
+      randomDroppedApples.push(applesInTree[randomIndex])
+      setDroppedApples(randomDroppedApples)
+    }
+
+    const newApples = applesInTree.map((apple) => {
+      const isDropped = randomDroppedApples.some((a) => a.id === apple.id)
+      if (isDropped) {
+        // change the apple position as dropping
+        return {
+          ...apple,
+          position: {
+            ...apple.position,
+            top: 100,
+          },
+        }
+      }
+      return apple
+    })
+
+    dispatch(setApplesInTree(newApples))
+  }
 
   const handleTreeClick = () => {
     dispatch(setIsTreeShaking(true))
 
     setTimeout(() => {
       dispatch(setIsTreeShaking(false))
-      dispatch(setIsApplesDropping(true))
+      dropApples()
     }, [3000])
   }
 
-  const treeClassName = classNames(classes.treeWrapper, {
-    [classes.isShaking]: isTreeShaking,
-  })
+  const handleApplesDropped = () => {
+    console.log('apples dropped')
+
+    setTimeout(() => {
+      droppedApples.forEach((apple) => {
+        dispatch(addAppleToBasket(apple))
+      })
+    }, [1000])
+  }
 
   return (
     <Button
@@ -39,6 +87,7 @@ function Tree() {
         <Apple
           key={apple.id}
           position={makeStylePositions(apple.position)}
+          onAppleDropped={handleApplesDropped}
         />
       ))}
     </Button>

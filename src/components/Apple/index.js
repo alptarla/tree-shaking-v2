@@ -8,17 +8,19 @@ const DEFAULT_POSITION = {
   left: 0,
 }
 
-function Apple({ position = DEFAULT_POSITION }) {
+function Apple({ position = DEFAULT_POSITION, onAppleDropped }) {
   return (
     <AppleSVG
       style={{ ...position }}
       className={classes.apple}
+      onTransitionEnd={onAppleDropped}
     />
   )
 }
 
 Apple.propTypes = {
   position: PropTypes.object,
+  onAppleDropped: PropTypes.func,
 }
 
 export default Apple

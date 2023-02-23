@@ -5,7 +5,7 @@ import {
 } from '../constants'
 
 export function getRandomNumber({ min = 0, max = 0 }) {
-  return Math.random() * (max - min) + min
+  return Math.round(Math.random() * (max - min) + min)
 }
 
 export function getApplePositions(count, type = BASKET) {
