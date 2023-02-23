@@ -2,8 +2,6 @@
 
 ## Overview
 
-Live https://react-tree-shaking-app.vercel.app
-
 ### Screenshot
 
 ![react-tree-shaking](/screenshots/app-screenshot.png)
@@ -17,8 +15,6 @@ Live https://react-tree-shaking-app.vercel.app
 ### Setup
 
 ```
-git clone https://github.com/alptarla/react-tree-shaking-app.git
-
 npm install
 npm start
 ```
