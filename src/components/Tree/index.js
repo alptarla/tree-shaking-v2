@@ -1,48 +1,32 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import TreeSVG from '../../assets/cartoon-tree.svg'
 import Button from '../Button'
 import classes from './Tree.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  setApplesPositions,
-  setIsDropping,
-  setIsShaking,
+  setIsApplesDropping,
+  setIsTreeShaking,
 } from '../../redux/features/sceneSlice'
 import classNames from 'classnames'
 import Apple from '../Apple'
 import { makeStylePositions } from '../../helpers'
 
 function Tree() {
-  const droppedApples = [1, 3, 7, 4]
-
-  const { isShaking, applesPositions, isDropping } = useSelector(
-    (state) => state.scene
-  )
+  const { applesInTree, isTreeShaking } = useSelector((state) => state.scene)
   const dispatch = useDispatch()
 
   const handleTreeClick = () => {
-    dispatch(setIsShaking(true))
+    dispatch(setIsTreeShaking(true))
 
     setTimeout(() => {
-      dispatch(setIsShaking(false))
-      dispatch(setIsDropping(true))
+      dispatch(setIsTreeShaking(false))
+      dispatch(setIsApplesDropping(true))
     }, [3000])
   }
 
   const treeClassName = classNames(classes.treeWrapper, {
-    [classes.isShaking]: isShaking,
+    [classes.isShaking]: isTreeShaking,
   })
-
-  useEffect(() => {
-    if (!isDropping) return
-
-    const newPos = applesPositions.map((pos, i) => {
-      if (droppedApples.includes(i)) return { left: pos.left, top: 100 }
-      return pos
-    })
-
-    dispatch(setApplesPositions([...newPos]))
-  }, [isDropping])
 
   return (
     <Button
@@ -51,10 +35,10 @@ function Tree() {
       className={treeClassName}
     >
       <TreeSVG className={classes.tree} />
-      {applesPositions.map((pos, idx) => (
+      {applesInTree.map((apple) => (
         <Apple
-          key={idx}
-          position={makeStylePositions(pos)}
+          key={apple.id}
+          position={makeStylePositions(apple.position)}
         />
       ))}
     </Button>

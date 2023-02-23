@@ -1,28 +1,53 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { APPLES_COUNT } from '../../constants'
+import { APPLES_COUNT, BASKET, TREE } from '../../constants'
+import { generateApplesArray } from '../../helpers'
+
+const initialState = {
+  applesInTree: generateApplesArray(APPLES_COUNT, TREE),
+  applesInBasket: generateApplesArray(APPLES_COUNT, BASKET),
+  isTreeShaking: false,
+  isApplesDropping: false,
+}
 
 export const sceneSlice = createSlice({
-  name: 'tree',
-  initialState: {
-    applesCount: APPLES_COUNT,
-    applesPositions: [],
-    isShaking: false,
-    isDropping: false,
-  },
+  name: 'scene',
+  initialState,
   reducers: {
-    setIsShaking(state, { payload }) {
-      state.isShaking = payload
+    setApplesInTree(state, { payload }) {
+      state.applesInTree = payload
     },
-    setIsDropping(state, { payload }) {
-      state.isDropping = payload
+    setApplesInBasket(state, { payload }) {
+      state.applesInBasket = payload
     },
-    setApplesPositions(state, { payload }) {
-      state.applesPositions = payload
+    addAppleToBasket(state, { payload }) {
+      const isAlreadyBasket = state.applesInBasket.some((apple) => {
+        return apple.id === payload.id
+      })
+
+      if (!isAlreadyBasket) {
+        // add to basket
+        state.applesInBasket.push(payload)
+        // remove from tree
+        state.applesInTree = state.applesInTree.filter((apple) => {
+          return apple.id !== payload.id
+        })
+      }
+    },
+    setIsTreeShaking(state, { payload }) {
+      state.isTreeShaking = payload
+    },
+    setIsApplesDropping(state, { payload }) {
+      state.isApplesDropping = payload
     },
   },
 })
 
-export const { setIsShaking, setIsDropping, setApplesPositions } =
-  sceneSlice.actions
+export const {
+  setApplesInBasket,
+  setApplesInTree,
+  addAppleToBasket,
+  setIsApplesDropping,
+  setIsTreeShaking,
+} = sceneSlice.actions
 
 export default sceneSlice.reducer
