@@ -17,12 +17,14 @@ function Tree() {
   const [droppedApples, setDroppedApples] = useState([])
 
   const { applesInTree, isTreeShaking } = useSelector((state) => state.scene)
-
   const dispatch = useDispatch()
 
   const treeClassName = classNames(classes.treeWrapper, {
     [classes.isShaking]: isTreeShaking,
   })
+
+  const isTreeDisabled =
+    isTreeShaking || !applesInTree.length || droppedApples.length
 
   const dropApples = () => {
     dispatch(setIsApplesDropping(true))
@@ -72,6 +74,7 @@ function Tree() {
     setTimeout(() => {
       droppedApples.forEach((apple) => {
         dispatch(addAppleToBasket(apple))
+        setDroppedApples([])
       })
     }, [1000])
   }
@@ -81,6 +84,7 @@ function Tree() {
       onClick={handleTreeClick}
       variant='ghost'
       className={treeClassName}
+      disabled={isTreeDisabled}
     >
       <TreeSVG className={classes.tree} />
       {applesInTree.map((apple) => (
