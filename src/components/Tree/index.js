@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import TreeSVG from '../../assets/cartoon-tree.svg'
 import Button from '../Button'
 import classes from './Tree.module.scss'
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   addAppleToBasket,
   setApplesInTree,
+  setDroppedApples,
   setIsApplesDropping,
   setIsTreeShaking,
 } from '../../redux/features/sceneSlice'
@@ -14,9 +15,9 @@ import Apple from '../Apple'
 import { getRandomNumber, makeStylePositions } from '../../helpers'
 
 function Tree() {
-  const [droppedApples, setDroppedApples] = useState([])
-
-  const { applesInTree, isTreeShaking } = useSelector((state) => state.scene)
+  const { applesInTree, isTreeShaking, droppedApples } = useSelector(
+    (state) => state.scene
+  )
   const dispatch = useDispatch()
 
   const treeClassName = classNames(classes.treeWrapper, {
@@ -39,7 +40,7 @@ function Tree() {
       })
 
       randomDroppedApples.push(applesInTree[randomIndex])
-      setDroppedApples(randomDroppedApples)
+      dispatch(setDroppedApples([...randomDroppedApples]))
     }
 
     const newApples = applesInTree.map((apple) => {
@@ -74,7 +75,7 @@ function Tree() {
     setTimeout(() => {
       droppedApples.forEach((apple) => {
         dispatch(addAppleToBasket(apple))
-        setDroppedApples([])
+        dispatch(setDroppedApples([]))
       })
     }, [1000])
   }

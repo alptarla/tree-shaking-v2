@@ -5,7 +5,11 @@
   align-items: center;
   justify-content: center;
 
-  .basket {
-    align-self: flex-end;
+  .sceneRightWrapper {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    align-items: center;
+    justify-content: space-around;
   }
 }

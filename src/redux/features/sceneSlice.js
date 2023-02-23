@@ -5,6 +5,7 @@ import { generateApplesArray } from '../../helpers'
 const initialState = {
   applesInTree: generateApplesArray(APPLES_COUNT),
   applesInBasket: [],
+  droppedApples: [],
   isTreeShaking: false,
   isApplesDropping: false,
 }
@@ -33,11 +34,21 @@ export const sceneSlice = createSlice({
         })
       }
     },
+    setDroppedApples(state, { payload }) {
+      state.droppedApples = payload
+    },
     setIsTreeShaking(state, { payload }) {
       state.isTreeShaking = payload
     },
     setIsApplesDropping(state, { payload }) {
       state.isApplesDropping = payload
+    },
+    reset(state) {
+      state.applesInTree = generateApplesArray(APPLES_COUNT)
+      state.applesInBasket = []
+      state.droppedApples = []
+      state.isTreeShaking = false
+      state.isApplesDropping = false
     },
   },
 })
@@ -48,6 +59,8 @@ export const {
   addAppleToBasket,
   setIsApplesDropping,
   setIsTreeShaking,
+  setDroppedApples,
+  reset,
 } = sceneSlice.actions
 
 export default sceneSlice.reducer

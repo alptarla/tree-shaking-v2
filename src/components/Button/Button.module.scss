@@ -4,7 +4,7 @@
   padding: 1rem 2rem;
   margin: 0;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 1.3rem;
   cursor: pointer;
   text-align: center;
 
@@ -16,6 +16,7 @@
   &.primary {
     background: #0069ed;
     color: #ffffff;
+    border-radius: 0.5rem;
 
     &:hover,
     &:focus {
