@@ -17,6 +17,7 @@ function Tree() {
   const [droppedApples, setDroppedApples] = useState([])
 
   const { applesInTree, isTreeShaking } = useSelector((state) => state.scene)
+
   const dispatch = useDispatch()
 
   const treeClassName = classNames(classes.treeWrapper, {
@@ -67,8 +68,7 @@ function Tree() {
   }
 
   const handleApplesDropped = () => {
-    console.log('apples dropped')
-
+    // when apples dropped set to basket them after 1 seconds
     setTimeout(() => {
       droppedApples.forEach((apple) => {
         dispatch(addAppleToBasket(apple))
