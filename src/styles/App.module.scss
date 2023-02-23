@@ -4,4 +4,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .basket {
+    align-self: flex-end;
+  }
 }

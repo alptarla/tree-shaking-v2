@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { APPLES_COUNT, BASKET, TREE } from '../../constants'
+import { APPLES_COUNT } from '../../constants'
 import { generateApplesArray } from '../../helpers'
 
 const initialState = {
-  applesInTree: generateApplesArray(APPLES_COUNT, TREE),
-  applesInBasket: generateApplesArray(APPLES_COUNT, BASKET),
+  applesInTree: generateApplesArray(APPLES_COUNT),
+  applesInBasket: [],
   isTreeShaking: false,
   isApplesDropping: false,
 }

@@ -1,21 +1,15 @@
-import {
-  APPLE_BASKET_POSITIONS,
-  APPLE_TREE_POSITIONS,
-  BASKET,
-} from '../constants'
+import { APPLE_POSITIONS } from '../constants'
 
 export function getRandomNumber({ min = 0, max = 0 }) {
   return Math.round(Math.random() * (max - min) + min)
 }
 
-export function getApplePositions(count, type = BASKET) {
+export function getApplePositions(count) {
   const positions = []
-  const positionsRange =
-    type === BASKET ? APPLE_BASKET_POSITIONS : APPLE_TREE_POSITIONS
 
   for (let idx = 0; idx < count; idx++) {
-    const top = getRandomNumber({ ...positionsRange.top })
-    const left = getRandomNumber({ ...positionsRange.left })
+    const top = getRandomNumber({ ...APPLE_POSITIONS.top })
+    const left = getRandomNumber({ ...APPLE_POSITIONS.left })
     positions.push({ top, left })
   }
 
@@ -31,8 +25,8 @@ export function makeStylePositions(pos, unit = '%') {
   return newPos
 }
 
-export function generateApplesArray(count, type = BASKET) {
-  const positions = getApplePositions(count, type)
+export function generateApplesArray(count) {
+  const positions = getApplePositions(count)
 
   return positions.map((position) => ({
     id: `id-${Math.random().toString(16).slice(2)}`,
